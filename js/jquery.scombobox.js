@@ -43,7 +43,7 @@
         clist = '-list', cmainspan = '-mainspan', chovered = '-hovered',
         csep = '-separator', cpheader = '-header',
         cddback = '-dropdown-background', cddarr = '-dropdown-arrow',
-        cdisabled = '-disabled', crequired = '-required';
+        cdisabled = '-disabled', crequired = '-required', cpattern = '-pattern';
     function durations(d) {
         return ({
             fast: 200,
@@ -109,6 +109,14 @@
             if ($select.attr('required') || opts.required) {
                 this.find(cp + cdisplay).prop('required', 'required');
                 this.addClass(pname + crequired);
+            }
+            // Select can't have pattern, however it is just easier way to define pattern
+            if ($select.attr('pattern') && opts.pattern == null) {
+                opts.pattern = $select.attr('pattern');
+            }
+            if (opts.pattern != null) {
+                this.find(cp + cdisplay).prop('pattern', opts.pattern);
+                this.addClass(pname + cpattern);
             }
             if ($div.length == 0) {
                 this.append($div = $('<div class="' + pname + clist + '"></div>'));
@@ -1277,6 +1285,10 @@
          * Whether set required attribute.
          */
         required: false,
+        /**
+         * Whether set pattern attribute.
+         */
+        pattern: null,
         /**
          * Whether set combobox disabled.
          */
